@@ -1,80 +1,84 @@
 <h1 align="center">
-  <img src="./assets/readme-icon.png" alt="icon" width="200"></img>
+  <img src="./assets/dockerize_package_icon.png" alt="icon" width="200"></img>
   <br>
-  <b>README template</b>
+  <b>Dockerize Github Projects </b>
 </h1>
 
-<p align="center">Structured guide to create informative project documentation, providing a standard format for conveying project details and instructions.</p>
+<p align="center">Containerize code repository using Docker to simplify deployment, improve portability, and streamline development workflows.</p>
 
 <!-- Badges -->
 <p align="center">
-  <a href="https://github.com/QuanBlue/Readme-template/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/QuanBlue/Readme-template" alt="contributors" />
+  <a href="https://github.com/QuanBlue/Dockerize-Github-Projects/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/QuanBlue/Dockerize-Github-Projects" alt="contributors" />
   </a>
   <a href="">
-    <img src="https://img.shields.io/github/last-commit/QuanBlue/Readme-template" alt="last update" />
+    <img src="https://img.shields.io/github/last-commit/QuanBlue/Dockerize-Github-Projects" alt="last update" />
   </a>
-  <a href="https://github.com/QuanBlue/Readme-template/network/members">
-    <img src="https://img.shields.io/github/forks/QuanBlue/Readme-template" alt="forks" />
+  <a href="https://github.com/QuanBlue/Dockerize-Github-Projects/network/members">
+    <img src="https://img.shields.io/github/forks/QuanBlue/Dockerize-Github-Projects" alt="forks" />
   </a>
-  <a href="https://github.com/QuanBlue/Readme-template/stargazers">
-    <img src="https://img.shields.io/github/stars/QuanBlue/Readme-template" alt="stars" />
+  <a href="https://github.com/QuanBlue/Dockerize-Github-Projects/stargazers">
+    <img src="https://img.shields.io/github/stars/QuanBlue/Dockerize-Github-Projects" alt="stars" />
   </a>
-  <a href="https://github.com/QuanBlue/Readme-template/issues/">
-    <img src="https://img.shields.io/github/issues/QuanBlue/Readme-template" alt="open issues" />
+  <a href="https://github.com/QuanBlue/Dockerize-Github-Projects/issues/">
+    <img src="https://img.shields.io/github/issues/QuanBlue/Dockerize-Github-Projects" alt="open issues" />
   </a>
-  <a href="https://github.com/QuanBlue/Readme-template/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/QuanBlue/Readme-template.svg" alt="license" />
+  <a href="https://github.com/QuanBlue/Dockerize-Github-Projects/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/QuanBlue/Dockerize-Github-Projects.svg" alt="license" />
   </a>
 </p>
 
 <p align="center">
   <b>
-      <a href="#demo">Demo</a> •
-      <a href="https://github.com/QuanBlue/Readme-template">Documentation</a> •
-      <a href="https://github.com/QuanBlue/Readme-template/issues/">Report Bug</a> •
-      <a href="https://github.com/QuanBlue/Readme-template/issues/">Request Feature</a>
+      <a href="https://github.com/QuanBlue/Dockerize-Github-Projects">Documentation</a> •
+      <a href="https://github.com/QuanBlue/Dockerize-Github-Projects/issues/">Report Bug</a> •
+      <a href="https://github.com/QuanBlue/Dockerize-Github-Projects/issues/">Request Feature</a>
   </b>
 </p>
 
 <br/>
 
-![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
-
 <details open>
 <summary><b>📖 Table of Contents</b></summary>
 
--  [Demo](#film_projector-demo)
--  [Key Features](#star-key-features)
--  [Getting Started](#toolbox-getting-started)
-   -  [Prerequisites](#pushpin-prerequisites)
-   -  [Environment Variables](#key-environment-variables)
-   -  [Installation](#hammer_and_wrench-installation)
--  [Roadmap](#world_map-roadmap)
--  [Contributors](#busts_in_silhouette-contributors)
--  [Credits](#sparkles-credits)
--  [License](#scroll-license)
--  [Related Projects](#link-related-projects)
+-  [:toolbox: Getting Started](#toolbox-getting-started)
+   -  [Push a image to Github Packages (GHCR)](#push-a-image-to-github-packages-ghcr)
+   -  [Use Github Actions to Publish a Docker image to Github Packages (GHCR)](#use-github-actions-to-publish-a-docker-image-to-github-packages-ghcr)
+   -  [:pushpin: Prerequisites](#pushpin-prerequisites)
+   -  [:hammer_and_wrench: Installation](#hammer_and_wrench-installation)
+-  [:world_map: Roadmap](#world_map-roadmap)
+-  [:busts_in_silhouette: Contributors](#busts_in_silhouette-contributors)
+-  [:sparkles: Credits](#sparkles-credits)
+-  [:scroll: License](#scroll-license)
+-  [:link: Related Projects](#link-related-projects)
 </details>
 
-# :film_projector: Demo
-
-Check out the [**demo video**](https://www.youtube.com/channel/UCALhAytLBhmG2un43YxU4mw) to see the app in action.  
-Here is deployed website: [**https://quanblue.netlify.app/**](https://quanblue.netlify.app/)
-
-# :star: Key Features
-
--  Template - professional README, [Release](./Release.md) templates
--  Theme - nice theme for README
-
 # :toolbox: Getting Started
+
+Push a image to Github Packages (GHCR)
+
+## Push a image to Github Packages (GHCR)
+
+1. Create image
+2. Create PAT on Github
+3. Authenticate GHCR
+4. Tag and push our image to GHCR
+
+```sh
+export CR_PAT=<TOKEN>
+echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
+```
+
+## Use Github Actions to Publish a Docker image to Github Packages (GHCR)
+
+1. Create repo - and Checkin our Dockerfile
+2. Build your Github action workflow
+3. Trigger our workflow
 
 ## :pushpin: Prerequisites
 
 -  **Python:** `>= 3.10.7`
 -  **Docker Engine:** Docker provides a consistent and portable environment for running applications in containers. Install [here](https://www.docker.com/get-started/).
-
-## :key: Environment Variables
 
 To run this project, you need to add the following environment variables to your `.env` file in `/`:
 
@@ -101,7 +105,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [P
 
 ```bash
 # Clone this repository
-git clone https://github.com/QuanBlue/Readme-template
+git clone https://github.com/QuanBlue/Dockerize-Github-Projects
 
 # Go into the repository
 cd Readme-template
@@ -124,8 +128,8 @@ npm start
 
 # :busts_in_silhouette: Contributors
 
-<a href="https://github.com/QuanBlue/Readme-template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=QuanBlue/Readme-template" />
+<a href="https://github.com/QuanBlue/Dockerize-Github-Projects/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=QuanBlue/Dockerize-Github-Projects" />
 </a>
 
 Contributions are always welcome!
@@ -146,7 +150,7 @@ Distributed under the MIT License. See <a href="./LICENSE">`LICENSE`</a> for mor
 
 -  <u>[**QuanBlue**](https://github.com/QuanBlue/QuanBlue)</u>: My bio
 -  <u>[**Portfolio**](https://github.com/QuanBlue/Portfolio)</u>: My first portfolio website, using MERN stack. [Visit here](https://quanblue.netlify.app/)
--  <u>[**Readme-template**](https://github.com/QuanBlue/Readme-template)</u>: A template for creating README.md
+-  <u>[**Readme-template**](https://github.com/QuanBlue/Dockerize-Github-Projects)</u>: A template for creating README.md
 
 ---
 
