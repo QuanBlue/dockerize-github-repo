@@ -44,12 +44,13 @@
 -  [:toolbox: Getting Started](#toolbox-getting-started)
    -  [:pushpin: Prerequisites](#pushpin-prerequisites)
    -  [Dockerize Github Projects](#dockerize-github-projects)
-      -  [Push Docker images manually](#push-docker-images-manually)
+      -  [Way 1: Push Docker images manually](#way-1-push-docker-images-manually)
          -  [Create Image](#create-image)
             -  [Create a Dockerfile](#create-a-dockerfile)
             -  [Build the image](#build-the-image)
             -  [Push container images to Github Packages (GHCR)](#push-container-images-to-github-packages-ghcr)
          -  [Setting Package](#setting-package)
+      -  [Way 2: Automate Build and Push images via a Github Actions workflow](#way-2-automate-build-and-push-images-via-a-github-actions-workflow)
 -  [:world_map: Roadmap](#world_map-roadmap)
 -  [:busts_in_silhouette: Contributors](#busts_in_silhouette-contributors)
 -  [:sparkles: Credits](#sparkles-credits)
@@ -84,7 +85,7 @@ Before proceeding, make sure you have the following prerequisites installed:
 
 ## Dockerize Github Projects
 
-### Push Docker images manually
+### Way 1: Push Docker images manually
 
 #### Create Image
 
@@ -95,7 +96,6 @@ Create a `Dockerfile` in the root directory of your project. The `Dockerfile` co
 Here's a simple example:
 
 ```Dockerfile
-# Dockerfile
 FROM alpine
 CMD [ "echo" "Dockerize your Github project"]
 ```
@@ -125,11 +125,73 @@ docker push ghcr.io/<username>/<repository>:<tag>
 -  Add collaborators
 -  Add README instruction
 
+### Way 2: Automate Build and Push images via a Github Actions workflow
+
+Create a workflow file (e.g. `build.yml`) in the `.github/workflows` directory to automate the build and push images.
+
+Using this template to create a workflow file:
+
+```yml
+# .github/workflows/docker-publish.yml
+name: Create and publish Docker image/package
+
+on:
+   push:
+      branches: [main]
+   pull_request:
+      branches: [main]
+
+env:
+   REGISTRY: ghcr.io
+   IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+   build:
+      runs-on: ubuntu-latest
+      permissions:
+         contents: read
+         packages: write
+
+      steps:
+         - name: Checkout repository
+           uses: actions/checkout@v3
+
+         - name: Log in to the Container registry ${{ env.REGISTRY }}
+           if: github.event_name != 'pull_request'
+           uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+           with:
+              registry: ${{ env.REGISTRY }}
+              username: ${{ github.actor }}
+              password: ${{ secrets.GITHUB_TOKEN }}
+
+         - name: Extract Docker metadata (tags, labels)
+           id: meta
+           uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+           with:
+              images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+              tags: |
+                 type=ref,event=branch
+                 type=sha
+
+         - name: Build and push Docker image
+           uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+           with:
+              context: .
+              push: ${{ github.event_name != 'pull_request' }}
+              tags: ${{ steps.meta.outputs.tags }}
+              labels: ${{ steps.meta.outputs.labels }}
+```
+
+> **Note:**
+>
+> -  See this workflow file in detail (with explain) [here](./.github/workflows/docker-publish.yml)
+> -  For detail instruction, see "[Github-Actions-cheatsheet](https://github.com/QuanBlue/Github-Actions-cheatsheet)"
+
 # :world_map: Roadmap
 
--  [ ] Dockerize Github Projects
+-  [x] Dockerize Github Projects
    -  [x] Manual
-   -  [ ] Using Github Actions
+   -  [x] Using Github Actions
 -  [ ] Emoji
 
 # :busts_in_silhouette: Contributors
