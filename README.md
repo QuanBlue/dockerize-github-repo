@@ -38,25 +38,31 @@
 
 <br/>
 
+![screenshot](./assets/github-actions-github-container-registry-docker.png)
+
+<br/>
+
 <details open>
 <summary><b>📖 Table of Contents</b></summary>
 
--  [:toolbox: Getting Started](#toolbox-getting-started)
-   -  [:pushpin: Prerequisites](#pushpin-prerequisites)
-   -  [Dockerize Github Projects](#dockerize-github-projects)
-      -  [Way 1: Push Docker images manually](#way-1-push-docker-images-manually)
-         -  [Create Image](#create-image)
-            -  [Create a Dockerfile](#create-a-dockerfile)
-            -  [Build the image](#build-the-image)
-            -  [Push container images to Github Packages (GHCR)](#push-container-images-to-github-packages-ghcr)
-         -  [Setting Package](#setting-package)
-      -  [Way 2: Automate Build and Push images via a Github Actions workflow](#way-2-automate-build-and-push-images-via-a-github-actions-workflow)
-   -  [Practice](#practice)
--  [:world_map: Roadmap](#world_map-roadmap)
--  [:busts_in_silhouette: Contributors](#busts_in_silhouette-contributors)
--  [:sparkles: Credits](#sparkles-credits)
--  [:scroll: License](#scroll-license)
--  [:link: Related Projects](#link-related-projects)
+-  [Getting Started](#toolbox-getting-started)
+   -  [Prerequisites](#pushpin-prerequisites)
+-  [Dockerize Github Projects](#whale-dockerize-github-projects)
+   -  [Way 1: Push Docker images manually](#one-way-1-push-docker-images-manually)
+      -  [Create Image](#create-image)
+         -  [Create a Dockerfile](#create-a-dockerfile)
+         -  [Build the image](#build-the-image)
+      -  [Push Image to Github Packages (GHCR)](#push-image-to-github-packages-ghcr)
+      -  [Setting Package](#setting-package)
+   -  [Way 2: Automate Build and Push images via a Github Actions workflow](#two-way-2-automate-build-and-push-images-via-a-github-actions-workflow)
+      -  [Create a Dockerfile](#create-a-dockerfile-1)
+      -  [Create a Workflow file](#create-a-workflow-file)
+-  [Practice](#weight_lifting_man-practice)
+-  [Roadmap](#world_map-roadmap)
+-  [Contributors](#busts_in_silhouette-contributors)
+-  [Credits](#sparkles-credits)
+-  [License](#scroll-license)
+-  [Related Projects](#link-related-projects)
 </details>
 
 # :toolbox: Getting Started
@@ -84,13 +90,13 @@ Before proceeding, make sure you have the following prerequisites installed:
       echo $CR_PAT | docker login ghcr.io -u <username> --password-stdin
       ```
 
-## Dockerize Github Projects
+# :whale: Dockerize Github Projects
 
-### Way 1: Push Docker images manually
+## :one: Way 1: Push Docker images manually
 
-#### Create Image
+### Create Image
 
-##### Create a Dockerfile
+#### Create a Dockerfile
 
 Create a `Dockerfile` in the root directory of your project. The `Dockerfile` contains instructions for building a Docker image.
 
@@ -101,7 +107,7 @@ FROM alpine
 CMD [ "echo" "Dockerize your Github project"]
 ```
 
-##### Build the image
+#### Build the image
 
 Build the Docker image using the `docker build command. Run the following command from the project's root directory:
 
@@ -109,7 +115,7 @@ Build the Docker image using the `docker build command. Run the following comman
 docker build -t ghcr.io/<username>/<repository>:<tag> .
 ```
 
-##### Push container images to Github Packages (GHCR)
+### Push Image to Github Packages (GHCR)
 
 ```sh
 # Tag the image
@@ -119,16 +125,22 @@ docker tag <local-image> ghcr.io/<username>/<repository>:<tag>
 docker push ghcr.io/<username>/<repository>:<tag>
 ```
 
-#### Setting Package
+### Setting Package
 
 -  Public package
 -  Connect package to Github Repository
 -  Add collaborators
 -  Add README instruction
 
-### Way 2: Automate Build and Push images via a Github Actions workflow
+## :two: Way 2: Automate Build and Push images via a Github Actions workflow
 
-Create a workflow file (e.g. `build.yml`) in the `.github/workflows` directory to automate the build and push images.
+### Create a Dockerfile
+
+Follow the steps in [Create a Dockerfile](#create-a-dockerfile) to create a Dockerfile in the root directory of your project.
+
+### Create a Workflow file
+
+Create a workflow file (e.g. `build.yml`) in the `.github/workflows` directory.
 
 Using this template to create a workflow file:
 
@@ -182,12 +194,15 @@ jobs:
               labels: ${{ steps.meta.outputs.labels }}
 ```
 
+After push, the workflow will be triggered and the image will be built and pushed to the GHCR.
+
 > **Note:**
 >
+> -  Check this repo Actions [here](https://github.com/QuanBlue/Dockerize-Github-Projects/actions)
 > -  See this workflow file in detail (with explain) [here](./.github/workflows/docker-publish.yml)
 > -  For detail instruction, see "[Github-Actions-cheatsheet](https://github.com/QuanBlue/Github-Actions-cheatsheet)"
 
-## Practice
+# :weight_lifting_man: Practice
 
 <details>
 <summary>
@@ -233,6 +248,20 @@ When you push to the `main` branch, the workflow will be triggered and build and
 
 </details>
 
+<br/>
+
+Check Github packages: of this repo [here](https://github.com/QuanBlue/Dockerize-Github-Projects/pkgs/container/dockerize-github-projects)
+
+<div align="center">
+
+![Docker package](./assets/docker-package.png)
+<i>Figure 1. dockerize-github-project package</i>
+
+</div>
+
+-  Container with tag `manually` is pushed manually
+-  Container with tag `main` is pushed via Github Actions workflow
+
 # :world_map: Roadmap
 
 -  [x] Dockerize Github Projects
@@ -262,9 +291,7 @@ Distributed under the MIT License. See <a href="./LICENSE">`LICENSE`</a> for mor
 
 # :link: Related Projects
 
--  <u>[**QuanBlue**](https://github.com/QuanBlue/QuanBlue)</u>: My bio
--  <u>[**Portfolio**](https://github.com/QuanBlue/Portfolio)</u>: My first portfolio website, using MERN stack. [Visit here](https://quanblue.netlify.app/)
--  <u>[**Readme-template**](https://github.com/QuanBlue/Dockerize-Github-Projects)</u>: A template for creating README.md
+-  <u>[**Github Actions cheatsheet**](https://github.com/QuanBlue/Github-Actions-cheatsheet)</u>: A cheat sheet for Github actions.
 
 ---
 
