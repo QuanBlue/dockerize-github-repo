@@ -51,6 +51,7 @@
             -  [Push container images to Github Packages (GHCR)](#push-container-images-to-github-packages-ghcr)
          -  [Setting Package](#setting-package)
       -  [Way 2: Automate Build and Push images via a Github Actions workflow](#way-2-automate-build-and-push-images-via-a-github-actions-workflow)
+   -  [Practice](#practice)
 -  [:world_map: Roadmap](#world_map-roadmap)
 -  [:busts_in_silhouette: Contributors](#busts_in_silhouette-contributors)
 -  [:sparkles: Credits](#sparkles-credits)
@@ -171,7 +172,6 @@ jobs:
               images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
               tags: |
                  type=ref,event=branch
-                 type=sha
 
          - name: Build and push Docker image
            uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
@@ -187,12 +187,58 @@ jobs:
 > -  See this workflow file in detail (with explain) [here](./.github/workflows/docker-publish.yml)
 > -  For detail instruction, see "[Github-Actions-cheatsheet](https://github.com/QuanBlue/Github-Actions-cheatsheet)"
 
+## Practice
+
+<details>
+<summary>
+  <b>Way 1:</b>  Push Docker images manually
+</summary>
+
+```sh
+# build
+➜ docker build -t ghcr.io/quanblue/dockerize-github-projects:manually .
+[+] Building 25.9s (5/5) FINISHED
+ => [internal] load build definition from Dockerfile                       0.1s
+ => => transferring dockerfile: 94B                                        0.0s
+ => [internal] load .dockerignore                                          0.1s
+ => => transferring context: 2B                                            0.0s
+ => [internal] load metadata for docker.io/library/alpine:latest           3.6s
+ => [1/1] FROM docker.io/library/alpine@sha256:02bb6f428431fbc2809c5d1b4  22.1s
+ => => resolve docker.io/library/alpine@sha256:02bb6f428431fbc2809c5d1b41  0.0s
+ => => sha256:02bb6f428431fbc2809c5d1b41eab5a68350194fb50 1.64kB / 1.64kB  0.0s
+ => => sha256:c0669ef34cdc14332c0f1ab0c2c01acb91d96014b172f1a 528B / 528B  0.0s
+ => => sha256:5e2b554c1c45d22c9d1aa836828828e320a26011b76 1.47kB / 1.47kB  0.0s
+ => => sha256:8a49fdb3b6a5ff2bd8ec6a86c05b2922a0f7454579 3.40MB / 3.40MB  21.9s
+ => => extracting sha256:8a49fdb3b6a5ff2bd8ec6a86c05b2922a0f7454579ecc076  0.1s
+ => exporting to image                                                     0.0s
+ => => exporting layers                                                    0.0s
+ => => writing image sha256:bfd7d991fec0ee73856a73d220f0addb54e94218f14a6  0.0s
+ => => naming to ghcr.io/quanblue/dockerize-github-projects:manually        0.0s
+
+# push
+➜ docker push ghcr.io/quanblue/dockerize-github-projects:manually
+The push refers to repository [ghcr.io/quanblue/dockerize-github-projects]
+bb01bd7e32b5: Pushed
+manually: digest: sha256:b6cf8bb5fe8270c5f1e39f124f8b5970e15ec9937a65367198b674a8317636e0 size: 527
+```
+
+</details>
+
+<details>
+<summary>
+  <b>Way 2:</b> Automate Build and Push images via a Github Actions workflow
+</summary>
+
+When you push to the `main` branch, the workflow will be triggered and build and push the image to the Github Container Registry.
+
+</details>
+
 # :world_map: Roadmap
 
 -  [x] Dockerize Github Projects
    -  [x] Manual
    -  [x] Using Github Actions
--  [ ] Emoji
+-  [x] Emoji
 
 # :busts_in_silhouette: Contributors
 
