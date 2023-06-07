@@ -1,7 +1,7 @@
 <h1 align="center">
   <img src="./assets/dockerize_package_icon.png" alt="icon" width="200"></img>
   <br>
-  <b>Dockerize Github Projects </b>
+  <b>[Guide] Dockerize Github Projects </b>
 </h1>
 
 <p align="center">Containerize code repository using Docker to simplify deployment, improve portability, and streamline development workflows.</p>
@@ -42,10 +42,14 @@
 <summary><b>📖 Table of Contents</b></summary>
 
 -  [:toolbox: Getting Started](#toolbox-getting-started)
-   -  [Push a image to Github Packages (GHCR)](#push-a-image-to-github-packages-ghcr)
-   -  [Use Github Actions to Publish a Docker image to Github Packages (GHCR)](#use-github-actions-to-publish-a-docker-image-to-github-packages-ghcr)
    -  [:pushpin: Prerequisites](#pushpin-prerequisites)
-   -  [:hammer_and_wrench: Installation](#hammer_and_wrench-installation)
+   -  [Dockerize Github Projects](#dockerize-github-projects)
+      -  [Push Docker images manually](#push-docker-images-manually)
+         -  [Create Image](#create-image)
+            -  [Create a Dockerfile](#create-a-dockerfile)
+            -  [Build the image](#build-the-image)
+            -  [Push container images to Github Packages (GHCR)](#push-container-images-to-github-packages-ghcr)
+         -  [Setting Package](#setting-package)
 -  [:world_map: Roadmap](#world_map-roadmap)
 -  [:busts_in_silhouette: Contributors](#busts_in_silhouette-contributors)
 -  [:sparkles: Credits](#sparkles-credits)
@@ -55,76 +59,78 @@
 
 # :toolbox: Getting Started
 
-Push a image to Github Packages (GHCR)
-
-## Push a image to Github Packages (GHCR)
-
-1. Create image
-2. Create PAT on Github
-3. Authenticate GHCR
-4. Tag and push our image to GHCR
-
-```sh
-export CR_PAT=<TOKEN>
-echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
-```
-
-## Use Github Actions to Publish a Docker image to Github Packages (GHCR)
-
-1. Create repo - and Checkin our Dockerfile
-2. Build your Github action workflow
-3. Trigger our workflow
-
 ## :pushpin: Prerequisites
 
--  **Python:** `>= 3.10.7`
--  **Docker Engine:** Docker provides a consistent and portable environment for running applications in containers. Install [here](https://www.docker.com/get-started/).
+Before proceeding, make sure you have the following prerequisites installed:
 
-To run this project, you need to add the following environment variables to your `.env` file in `/`:
+-  Docker: [Install Docker](https://docs.docker.com/get-docker/)
+-  Git: [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
--  **App configs:** Create `.env` file in `./`
+-  Login to `GitHub Container Registry (GHCR)`
 
-   -  `SECRET_KEY`: a key used by Flask to encrypt and sign session data.
-   -  `PORT`: specify which port the Flask application should listen on.
+   -  Create `Personal Access Token (PAT)` with the `write:packages` and `delete:packages` scopes.
 
-   Example:
+      > For more information, see "[Creating a personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)"
 
-   ```sh
-   # .env
-   SECRET_KEY="Readme-template"
-   PORT=3000
-   ```
+   -  Login to GHCR
 
-You can also check out the file `.env.example` to see all required environment variables.
+      ```sh
+      # Export PAT
+      export CR_PAT=<personal-access-token>
 
-> **Note**: If you want to use this example environment, you need to rename it to `.env`.
+      # Login to GHCR
+      echo $CR_PAT | docker login ghcr.io -u <username> --password-stdin
+      ```
 
-## :hammer_and_wrench: Installation
+## Dockerize Github Projects
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Python](https://www.python.org/downloads/) installed on your computer. From your command line:
+### Push Docker images manually
 
-```bash
-# Clone this repository
-git clone https://github.com/QuanBlue/Dockerize-Github-Projects
+#### Create Image
 
-# Go into the repository
-cd Readme-template
+##### Create a Dockerfile
 
-# Install dependencies
-npm install
+Create a `Dockerfile` in the root directory of your project. The `Dockerfile` contains instructions for building a Docker image.
 
-# Run the app
-npm start
+Here's a simple example:
+
+```Dockerfile
+# Dockerfile
+FROM alpine
+CMD [ "echo" "Dockerize your Github project"]
 ```
 
-> **Note**
-> If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+##### Build the image
+
+Build the Docker image using the `docker build command. Run the following command from the project's root directory:
+
+```sh
+docker build -t ghcr.io/<username>/<repository>:<tag> .
+```
+
+##### Push container images to Github Packages (GHCR)
+
+```sh
+# Tag the image
+docker tag <local-image> ghcr.io/<username>/<repository>:<tag>
+
+# Push the image
+docker push ghcr.io/<username>/<repository>:<tag>
+```
+
+#### Setting Package
+
+-  Public package
+-  Connect package to Github Repository
+-  Add collaborators
+-  Add README instruction
 
 # :world_map: Roadmap
 
--  [x] Update theme
--  [x] Emoji
--  [ ] Add more features
+-  [ ] Dockerize Github Projects
+   -  [x] Manual
+   -  [ ] Using Github Actions
+-  [ ] Emoji
 
 # :busts_in_silhouette: Contributors
 
@@ -138,8 +144,8 @@ Contributions are always welcome!
 
 This software uses the following open source packages:
 
--  [Node.js](https://nodejs.org/)
--  [Marked - a markdown parser](https://github.com/chjj/marked)
+-  [Docker](https://www.docker.com/)
+-  [Github](https://github.com/)
 -  Emojis are taken from [here](https://github.com/arvida/emoji-cheat-sheet.com)
 
 # :scroll: License
