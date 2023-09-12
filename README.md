@@ -271,8 +271,8 @@ Check Github packages: of this repo [here](https://github.com/QuanBlue/Dockerize
 
 # :busts_in_silhouette: Contributors
 
-<a href="https://github.com/QuanBlue/Dockerize-Github-Projects/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=QuanBlue/Dockerize-Github-Projects" />
+<a href="https://github.com/QuanBlue/dockerize-github-repo/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=QuanBlue/dockerize-github-repo" />
 </a>
 
 Contributions are always welcome!
